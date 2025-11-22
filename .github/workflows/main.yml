@@ -108,18 +108,18 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd foodgram
-            # Скачиваем новые образы
+            
             sudo docker compose -f docker-compose.production.yml pull
             
-            # Перезапускаем контейнеры
+            
             sudo docker compose -f docker-compose.production.yml down
             sudo docker compose -f docker-compose.production.yml up -d
             
-            # Выполняем миграции и сбор статики
+            
             sudo docker compose -f docker-compose.production.yml exec backend python manage.py migrate
             sudo docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic --noinput
             
-            # Чистим систему от старых образов (опционально, чтобы место не кончалось)
+            
             sudo docker system prune -af
 
   send_message:
